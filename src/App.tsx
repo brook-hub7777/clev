@@ -7,6 +7,12 @@ import { PricingPage } from "@/pages/PricingPage";
 import { BotPage } from "@/pages/BotPage";
 import { RunPage } from "@/pages/RunPage";
 import { CodePage } from "@/pages/CodePage";
+import { AboutPage } from "@/pages/AboutPage";
+import { ContactPage } from "@/pages/ContactPage";
+import { OpenSourcePage } from "@/pages/OpenSourcePage";
+import { BlogPage } from "@/pages/BlogPage";
+import { LegalPage } from "@/pages/LegalPage";
+import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { PixelButton } from "@/components/ui/PixelButton";
 
 function ScrollToTop() {
@@ -54,6 +60,12 @@ export function App() {
             <Route path="/run" element={<RunPage />} />
             <Route path="/proof" element={<CodePage />} />
             <Route path="/code" element={<CodePage />} />
+            <Route path="/about-us" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/hardware-notes" element={<OpenSourcePage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/legal" element={<LegalPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
