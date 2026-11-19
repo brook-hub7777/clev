@@ -53,6 +53,34 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Column 4: COMPANY */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                COMPANY
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/about-us" className="block text-muted-foreground hover:text-foreground">About us</Link>
+              <Link to="/contact" className="block text-muted-foreground hover:text-foreground">Contact</Link>
+              <a href="https://x.com/clev" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-foreground">Twitter / X</a>
+            </div>
+          </div>
+
+          {/* Column 5: RESOURCES */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                RESOURCES
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/blog" className="block text-muted-foreground hover:text-foreground">Blog</Link>
+              <Link to="/pricing" className="block text-muted-foreground hover:text-foreground">Pricing & Pilots</Link>
+              <Link to="/hardware-notes" className="block text-muted-foreground hover:text-foreground">Sensor Specs</Link>
+            </div>
+          </div>
+
         </div>
 
         {/* Bottom Social Bar */}
