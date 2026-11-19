@@ -203,6 +203,34 @@ export function PricingPage() {
           </div>
         </div>
 
+        {/* Detailed FAQ */}
+        <div className="mt-20 border-t border-border pt-16 max-w-4xl mx-auto">
+          <h3
+            className="text-xl sm:text-2xl uppercase tracking-wider text-foreground mb-8 text-center"
+            style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400 }}
+          >
+            PILOT &amp; DEPLOYMENT QUESTIONS
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-muted-foreground">
+            <div className="space-y-2">
+              <h4 className="font-semibold text-foreground">How do pilot deployments work?</h4>
+              <p>We supply evaluation sensor hardware and regional targeting access to qualified environmental enforcement teams, research groups, and industrial facilities.</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold text-foreground">What are the hardware costs?</h4>
+              <p>clevSense is engineered to cost hundreds of dollars instead of the tens of thousands required for standard optical spectroscopy analyzers.</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold text-foreground">Is clevRank free during the pilot?</h4>
+              <p>Yes, regional facility scoring is completely free for pilot participants while the platform is in beta.</p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-semibold text-foreground">How can our facility get started?</h4>
+              <p>Contact our team through the contact form to discuss your chimney monitoring requirements and pilot timeline.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
