@@ -240,6 +240,51 @@ export function Navbar() {
             CONTACT
           </Link>
 
+          {/* LOG IN Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setActiveDropdown("login")}
+            onMouseLeave={() => setActiveDropdown(null)}
+          >
+            <button
+              type="button"
+              className="text-[10px] font-normal uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground group/login -mx-2 flex items-center gap-1 px-2 py-2 outline-none"
+              style={{ fontFamily: "Silkscreen, monospace" }}
+              onClick={() => setActiveDropdown(activeDropdown === "login" ? null : "login")}
+            >
+              LOG IN
+              <ChevronDown
+                className={`relative top-px size-3 transition duration-300 ${
+                  activeDropdown === "login" ? "rotate-180 text-foreground" : ""
+                }`}
+              />
+            </button>
+
+            {activeDropdown === "login" && (
+              <div className="absolute top-full right-0 mt-1 w-64 border border-border bg-popover p-2 shadow-2xl z-50 rounded-none">
+                <Link
+                  to="/contact"
+                  className="block px-3 py-2.5 transition-colors hover:bg-muted text-foreground group"
+                >
+                  <div className="text-xs font-semibold flex items-center justify-between font-silkscreen">
+                    Clev Dashboard
+                    <ArrowUpRight className="size-3 text-muted-foreground group-hover:text-foreground" />
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">Sign in to inspection portal</div>
+                </Link>
+                <Link
+                  to="/run"
+                  className="block px-3 py-2.5 transition-colors hover:bg-muted text-foreground group"
+                >
+                  <div className="text-xs font-semibold flex items-center justify-between font-silkscreen">
+                    Sensor Console
+                    <ArrowUpRight className="size-3 text-muted-foreground group-hover:text-foreground" />
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">Monitor deployed stack nodes</div>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
 
       </div>
