@@ -287,8 +287,89 @@ export function Navbar() {
           </div>
         </div>
 
+        {/* Mobile Hamburger Button */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          </button>
+          <button
+            aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
+            className="p-2 text-foreground"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+          </button>
+        </div>
       </div>
 
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="border-t border-border bg-background px-6 py-6 lg:hidden space-y-4">
+          <div className="space-y-3">
+            <Link
+              to="/bot"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              clevRank (Targeting)
+            </Link>
+            <Link
+              to="/run"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              clevSense (Sensors)
+            </Link>
+            <Link
+              to="/code"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              clevProof (Reports)
+            </Link>
+            <Link
+              to="/pricing"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              Pricing
+            </Link>
+            <Link
+              to="/blog"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              Blog
+            </Link>
+            <Link
+              to="/about-us"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              About us
+            </Link>
+            <Link
+              to="/contact"
+              className="block text-xs uppercase tracking-widest text-foreground font-silkscreen py-1"
+            >
+              Contact
+            </Link>
+          </div>
+          <div className="pt-4 border-t border-border flex items-center justify-between">
+            <Link
+              to="/contact"
+              className="text-xs uppercase tracking-widest text-foreground font-silkscreen"
+            >
+              Log in →
+            </Link>
+            <button
+              onClick={toggleTheme}
+              className="flex items-center gap-1.5 text-xs text-muted-foreground font-silkscreen uppercase"
+            >
+              {isDark ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
+              {isDark ? "Light mode" : "Dark mode"}
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
