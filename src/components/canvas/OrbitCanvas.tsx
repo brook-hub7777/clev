@@ -40,3 +40,68 @@ function hexToRgb(colors: string[]) {
 const PALETTE_DARK = hexToRgb(["#0b0b0c", "#2c2c31", "#6e6e77", "#b3b1aa", "#f4f2ea"]);
 const PALETTE_LIGHT = hexToRgb(["#f6f4ee", "#c6c3ba", "#8a888f", "#3f3f45", "#111113"]);
 
+function O(o: number, t: number): number {
+  let e = (o * 374761393 + t * 668265263) | 0;
+  e = (e ^ (e >> 13)) | 0;
+  e = Math.imul(e, 1274126177);
+  return ((e ^ (e >> 16)) >>> 0) / 4294967296;
+}
+
+class DitherBuffer {
+  cell: number;
+  cols = 0;
+  rows = 0;
+  field = new Float32Array(0);
+  lowres: HTMLCanvasElement | null = null;
+  lctx: CanvasRenderingContext2D | null = null;
+  img: ImageData | null = null;
+
+  constructor(cell: number) {
+    this.cell = cell;
+  }
+
+  resize(w: number, h: number) {
+    this.cols = Math.max(8, Math.round(w / this.cell));
+    this.rows = Math.max(8, Math.round(h / this.cell));
+    this.field = new Float32Array(this.cols * this.rows);
+    this.lowres = document.createElement("canvas");
+    this.lowres.width = this.cols;
+    this.lowres.height = this.rows;
+    this.lctx = this.lowres.getContext("2d");
+    this.img = this.lctx ? this.lctx.createImageData(this.cols, this.rows) : null;
+  }
+
+  flush(ctx: CanvasRenderingContext2D, w: number, h: number, palette = PALETTE_DARK) {
+    if (!this.img || !this.lctx || !this.lowres) return;
+    const data = this.img.data;
+    const rgb = palette.rgb;
+    const maxShade = palette.count - 1;
+    let idx = 0;
+
+    for (let p = 0; p < this.rows; p++) {
+      const k = (p & 7) << 3;
+      for (let g = 0; g < this.cols; g++, idx++) {
+        let b = 0;
+        let u = this.field[idx];
+        if (u > 0) {
+          if (u > 1) u = 1;
+          const scaled = u * maxShade;
+          const base = scaled | 0;
+          b = scaled - base > BAYER[k | (g & 7)] ? base + 1 : base;
+          if (b > maxShade) b = maxShade;
+        }
+        const v = idx * 4;
+        const x = b * 3;
+        data[v] = rgb[x];
+        data[v + 1] = rgb[x + 1];
+        data[v + 2] = rgb[x + 2];
+        data[v + 3] = 255;
+      }
+    }
+    this.lctx.putImageData(this.img, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(this.lowres, 0, 0, this.cols, this.rows, 0, 0, w, h);
+  }
+}
+
