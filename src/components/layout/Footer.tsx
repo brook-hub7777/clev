@@ -5,6 +5,15 @@ import { OrbitCanvas } from "@/components/canvas/OrbitCanvas";
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background transition-colors">
+      {/* Top Dithered Orbit Strip */}
+      <div className="relative h-28 overflow-hidden md:h-40" aria-hidden="true">
+        <div className="absolute inset-x-0 bottom-0 h-[167%]">
+          <div className="relative isolate size-full overflow-hidden bg-background">
+            <OrbitCanvas height={267} />
+          </div>
+        </div>
+      </div>
+
       {/* Footer Content Columns */}
       <div className="mx-auto max-w-6xl px-6 pb-10 pt-6 sm:px-8 md:py-16">
         <div className="hidden gap-8 md:grid md:grid-cols-4 xl:grid-cols-7 xl:gap-x-6 text-xs font-sans">
