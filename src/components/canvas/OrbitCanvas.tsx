@@ -201,3 +201,198 @@ function initOrbitState(satellites: number): OrbitState {
   };
 }
 
+function resizeOrbitState(
+  state: OrbitState,
+  w: number,
+  h: number,
+  globeRadius?: number,
+  globeCenterY?: number
+) {
+  state.w = w;
+  state.h = h;
+  state.buf.resize(w, h);
+  const s = state.buf.cols;
+  const c = state.buf.rows;
+  const M = s * c;
+
+  state.trail = new Float32Array(M);
+  state.inside = new Uint8Array(M);
+  state.lat = new Float32Array(M);
+  state.lon = new Float32Array(M);
+  state.shade = new Float32Array(M);
+  state.inkA = new Float32Array(M);
+  state.inkB = new Float32Array(M);
+
+  state.cx = s * 0.5;
+
+  const isMobile = w < 640;
+  if (globeRadius !== undefined) {
+    const rPx = isMobile ? Math.min(globeRadius, 34) : globeRadius;
+    state.R = rPx / state.buf.cell;
+  } else {
+    state.R = Math.min(s, c) * 0.26;
+  }
+
+  if (globeCenterY !== undefined) {
+    const cyPx = isMobile ? Math.min(globeCenterY, 92) : globeCenterY;
+    state.cy = cyPx / state.buf.cell;
+  } else {
+    state.cy = c > s * 1.3 ? state.R * 2 : c * 0.35;
+  }
+
+  for (let a = 0; a < c; a++) {
+    for (let x = 0; x < s; x++) {
+      const b = a * s + x;
+      const e = (x - state.cx) / state.R;
+      const n = (a - state.cy) / state.R;
+      const u = e * e + n * n;
+      if (u > 1) continue;
+
+      const i = e;
+      const l = -n;
+      const y = Math.sqrt(1 - u);
+
+      state.inside[b] = 1;
+      state.lat[b] = Math.asin(l);
+      state.lon[b] = Math.atan2(i, y);
+
+      const g = i * JT + l * TT + y * BT;
+      const R = Math.max(0, g);
+      const P = Math.pow(1 - y, 2.6) * 0.12;
+      state.shade[b] = Math.pow(R, 1.15) * 0.85 + P + 0.045;
+
+      const E = i * XN + l * BN + y * DN;
+      const A = Math.min(1, Math.max(0, E));
+      const F = Math.exp(-Math.pow((E + 0.04) / 0.2, 2));
+      const S = smoothStep(-0.2, -0.6, E);
+      const o = i * 0.15 - l * 0.95 + y * 0.2;
+      const m = 1 - 0.85 * smoothStep(-0.05, 0.75, o);
+      const d = ((1 - A) * 0.8 + F * 0.1 - S * 0.22) * m;
+      const k = 0.22 * A * m;
+      const L = (1 - Math.sqrt(u)) * state.R;
+      const z = Math.max(0, (L < 1.2 ? 0.36 : 0.14 * smoothStep(3.5, 1.2, L)) - d);
+      const p = 0.6 * d + k / 0.55;
+
+      state.inkA[b] = 0.7 * d - (k * 0.45) / 0.55 + z + (p * 1.04) / 0.84;
+      state.inkB[b] = p / 0.84;
+    }
+  }
+
+  const starCount = Math.round(M / 380);
+  state.stars = new Float32Array(starCount * 4);
+  for (let a = 0; a < starCount; a++) {
+    const x = (O(a, 3) * M) | 0;
+    state.stars[a * 4] = x;
+    state.stars[a * 4 + 1] = 0.16 + O(a, 19) * 0.4;
+    state.stars[a * 4 + 2] = 0.4 + O(a, 37) * 1.7;
+    state.stars[a * 4 + 3] = O(a, 51) * Math.PI * 2;
+  }
+}
+
+function stampTrail(state: OrbitState, x: number, y: number, intensity: number) {
+  const c = state.buf.cols;
+  const M = state.buf.rows;
+  if (x < 1 || x >= c - 1 || y < 1 || y >= M - 1) return;
+  const r = y * c + x;
+  const a = state.trail;
+  a[r] = Math.min(1.3, a[r] + intensity);
+  const spread = intensity * 0.3;
+  a[r - 1] = Math.min(1.1, a[r - 1] + spread);
+  a[r + 1] = Math.min(1.1, a[r + 1] + spread);
+  a[r - c] = Math.min(1.1, a[r - c] + spread);
+  a[r + c] = Math.min(1.1, a[r + c] + spread);
+}
+
+function updateOrbitState(state: OrbitState, dt: number) {
+  state.time += dt;
+  const s = state.time;
+  const { buf, trail, inside, lat, lon, shade, stars, sats, cx: u, cy: i, R: l } = state;
+  const { cols: y, rows: g, field: R } = buf;
+
+  const decay = Math.pow(0.915, dt * 60);
+  for (let o = 0; o < trail.length; o++) trail[o] *= decay;
+
+  R.fill(0);
+
+  // Stars
+  for (let o = 0; o < stars.length; o += 4) {
+    const m = stars[o] | 0;
+    if (!inside[m]) {
+      R[m] = stars[o + 1] * (0.55 + 0.45 * Math.sin(s * stars[o + 2] + stars[o + 3]));
+    }
+  }
+
+  // Satellite orbit tracks
+  for (let m = 0; m < sats.length; m++) {
+    const d = sats[m];
+    for (let k = 0; k < 190; k++) {
+      const L = (k / 190) * Math.PI * 2;
+      const z = Math.cos(L);
+      const p = Math.sin(L);
+      const w = d.radius * (z * d.ux + p * d.vx);
+      const U = d.radius * (z * d.uy + p * d.vy);
+      if (d.radius * (z * d.uz + p * d.vz) < 0 && w * w + U * U < 1) continue;
+      const v = (u + w * l) | 0;
+      const T = (i - U * l) | 0;
+      if (v < 0 || v >= y || T < 0 || T >= g) continue;
+      const idx = T * y + v;
+      if (R[idx] < 0.075) R[idx] = 0.075;
+    }
+  }
+
+  // Planet body surface
+  const E = s * 0.11;
+  const { light: A, inkA: F, inkB: S } = state;
+  for (let o = 0; o < R.length; o++) {
+    if (!inside[o]) continue;
+    const m = lon[o] + E;
+    const d = lat[o];
+    const k =
+      0.62 +
+      0.2 * Math.sin(m * 2.3 + d * 1.4) +
+      0.12 * Math.sin(m * 4.7 - d * 3.2 + 1.7) +
+      0.1 * Math.sin(d * 5.1 + m * 1.1 + 4.2);
+    R[o] = A ? F[o] - S[o] * k : shade[o] * k;
+  }
+
+  // Small Moon Satellite
+  {
+    const o = satPos(state.moonSat, s);
+    const m = l * 0.17;
+    const d = u + o.x * l;
+    const k = i - o.y * l;
+    const behind = o.z < 0;
+    const z = Math.max(0, (d - m - 1) | 0);
+    const p = Math.min(y - 1, (d + m + 1) | 0);
+    const w = Math.max(0, (k - m - 1) | 0);
+    const U = Math.min(g - 1, (k + m + 1) | 0);
+
+    for (let C = w; C <= U; C++) {
+      for (let v = z; v <= p; v++) {
+        const TX = (v - d) / m;
+        const TY = (C - k) / m;
+        const distSq = TX * TX + TY * TY;
+        if (distSq > 1) continue;
+        const N = C * y + v;
+        if (behind && inside[N]) continue;
+        const sq = Math.sqrt(1 - distSq);
+        const Z = Math.max(0, TX * JT - TY * TT + sq * BT);
+        R[N] = Math.max(0.05, Math.pow(Z, 1.1) * 0.78 + Math.pow(1 - sq, 3) * 0.1);
+      }
+    }
+  }
+
+  // Satellites moving stamps
+  for (let o = 0; o < sats.length; o++) {
+    const m = satPos(sats[o], s);
+    if (!(m.z < 0 && m.x * m.x + m.y * m.y < 1)) {
+      stampTrail(state, (u + m.x * l) | 0, (i - m.y * l) | 0, 1);
+    }
+  }
+
+  // Blend trail onto field
+  for (let o = 0; o < R.length; o++) {
+    if (trail[o] > R[o]) R[o] = trail[o];
+  }
+}
+
