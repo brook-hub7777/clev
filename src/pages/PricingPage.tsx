@@ -23,6 +23,64 @@ export function PricingPage() {
 
         {/* 3-Column Pricing Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          {/* Card 1: clevRank */}
+          <div id="rank" className="border border-border bg-card p-8 flex flex-col justify-between">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <span className="text-[10px] uppercase font-silkscreen tracking-widest text-muted-foreground">
+                  Facility Targeting
+                </span>
+                <h3
+                  className="text-2xl sm:text-3xl tracking-wide text-foreground uppercase"
+                  style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400 }}
+                >
+                  clevRank
+                </h3>
+                <div className="pt-2">
+                  <span className="text-3xl font-bold font-silkscreen text-foreground">Soon</span>
+                  <span className="text-xs font-mono text-muted-foreground ml-2">waitlist open</span>
+                </div>
+              </div>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Prioritizes regional industrial facilities based on atmospheric spikes, satellite imagery, and trade discrepancies.
+              </p>
+
+              <div className="space-y-3 pt-4 border-t border-border/60">
+                <h4 className="text-xs uppercase font-silkscreen tracking-wider text-foreground">Included:</h4>
+                <ul className="space-y-2.5 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Regional plume attribution modeling</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Satellite and registry cross-checks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Detailed evidence scoring breakdown</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Interactive case studies &amp; synthetic data</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <PixelButton
+                variant="primary"
+                size="default"
+                href="/contact"
+                className="w-full"
+              >
+                JOIN THE WAITLIST
+              </PixelButton>
+            </div>
+          </div>
+
         </div>
 
       </div>
