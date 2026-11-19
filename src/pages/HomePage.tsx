@@ -4,6 +4,56 @@ import { OrbitCanvas } from "@/components/canvas/OrbitCanvas";
 import { ArrowRight, ChevronDown, Check, ShieldCheck, Activity, Database, FileText, Radio } from "lucide-react";
 
 export function HomePage() {
+  // Case chips for clevRank Section
+  const rankCases = [
+    {
+      id: "shandong",
+      label: "Eastern China 2018 case (validating)",
+      prompt: "Analyze 2018 regional atmospheric CFC-11 plume over Shandong and Hebei. Cross-reference industrial park registries, rigid foam blowing manifests, and trichlorofluoromethane trade flows.",
+      signal: "Trichlorofluoromethane (CFC-11) regional elevation: +34.2 ppt above baseline.",
+      facilities: [
+        { id: "SYN-014", type: "foam producer", score: "0.82", note: "Trade volume doesn't match reported foaming compound use", status: "HIGH" },
+        { id: "SYN-203", type: "refrigerant plant", score: "0.74", note: "Thermal signature anomaly detected in Q2 batch cycle", status: "HIGH" },
+        { id: "SYN-088", type: "chemical facility", score: "0.69", note: "Historical compliance infraction on precursor storage", status: "MEDIUM" },
+        { id: "SYN-119", type: "solvent processor", score: "0.58", note: "Shipment manifest gap with regional customs log", status: "MEDIUM" }
+      ]
+    },
+    {
+      id: "foam",
+      label: "Foam producers",
+      prompt: "Target polyol blowing facilities within 80km radius of monitoring station. Evaluate reported foaming compound substitutions against electricity usage curves.",
+      signal: "Halogenated foaming precursor derivative trace: +18.4 ppt.",
+      facilities: [
+        { id: "SYN-014", type: "rigid polyurethane plant", score: "0.86", note: "Feedstock intake incongruent with water-blown polyol reports", status: "HIGH" },
+        { id: "SYN-042", type: "insulation board maker", score: "0.71", note: "Unregistered storage tanks flagged by satellite imagery", status: "HIGH" },
+        { id: "SYN-077", type: "appliance foam line", score: "0.54", note: "Consistent baseline with occasional vent purging", status: "LOW" }
+      ]
+    },
+    {
+      id: "refrigerant",
+      label: "Refrigerant plants",
+      prompt: "Screen fluorochemical synthesis plants for uncaptured byproduct vent streams. Compare feedstock consumption ratios with production records.",
+      signal: "CTC precursor spike correlated with downwind wind vectors: +22.1 ppt.",
+      facilities: [
+        { id: "SYN-203", type: "HCFC synthesis facility", score: "0.79", note: "Byproduct vent ratio diverges from mass-balance baseline", status: "HIGH" },
+        { id: "SYN-312", type: "chiller servicing depot", score: "0.63", note: "Recovery cylinder inventory discrepancy in Q3", status: "MEDIUM" },
+        { id: "SYN-105", type: "gas packaging plant", score: "0.49", note: "Expected trace loss during cylinder decanting", status: "LOW" }
+      ]
+    },
+    {
+      id: "trade",
+      label: "Trade anomalies",
+      prompt: "Flag customs records showing discrepancies between imported raw chemicals and registered export quantities of finished closed-cell foam.",
+      signal: "Regional port manifest mismatch: 420 metric tons unaccounted.",
+      facilities: [
+        { id: "SYN-014", type: "export foam fabricator", score: "0.84", note: "Reported foaming precursor costs 40% below market average", status: "HIGH" },
+        { id: "SYN-510", type: "chemical trading broker", score: "0.76", note: "Intermediary billing through unlicensed regional distributor", status: "HIGH" },
+        { id: "SYN-209", type: "polyurethane compounder", score: "0.61", note: "Precursor delivery log omitted from annual filing", status: "MEDIUM" }
+      ]
+    }
+  ];
+
+  const [activeCase, setActiveCase] = useState(rankCases[0]);
   return (
     <main>
       {/* =========================================================================
@@ -121,6 +171,146 @@ export function HomePage() {
               </span>
             </a>
           </nav>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 1: CLEVRANK
+         ========================================================================= */}
+      <section id="rank" className="relative isolate scroll-mt-16 overflow-x-clip py-16 md:py-24 border-t border-border/60">
+        <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+              CLEVRANK · FACILITY TARGETING
+            </p>
+            <h2
+              className="mt-4 max-w-5xl break-words text-balance text-[clamp(1.7rem,3.3vw,2.5rem)] text-foreground uppercase"
+              style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1 }}
+            >
+              FROM A WHOLE PROVINCE TO A SHORT LIST
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground leading-relaxed">
+              An atmospheric spike tells you something is leaking somewhere in a region, not which building. clevRank scores nearby facilities using satellite imagery, trade records, and industrial registries, and shows the evidence behind every score. Inspectors start with the likeliest sites.
+            </p>
+          </div>
+
+          {/* Interactive Case Selector & Ranked List Mock */}
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left Case Console */}
+            <div className="lg:col-span-5 space-y-4">
+              <label className="text-[10px] uppercase font-silkscreen tracking-widest text-muted-foreground block">
+                OR START FROM A CASE
+              </label>
+              <div className="flex flex-col gap-2">
+                {rankCases.map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => setActiveCase(c)}
+                    className={`px-3 py-2.5 text-xs text-left font-mono transition-all border rounded-none cursor-pointer flex items-center justify-between ${
+                      activeCase.id === c.id
+                        ? "bg-foreground text-background border-foreground font-semibold"
+                        : "bg-background text-muted-foreground border-border hover:border-foreground/50 hover:text-foreground"
+                    }`}
+                  >
+                    <span>{c.label}</span>
+                    <span className="text-[10px] font-silkscreen opacity-75">SELECT</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="border border-foreground/25 bg-card p-4 space-y-2">
+                <span className="text-[10px] uppercase font-silkscreen tracking-widest text-muted-foreground block">
+                  REGIONAL SIGNAL PARAMETERS
+                </span>
+                <p className="text-xs font-mono text-foreground leading-relaxed">
+                  {activeCase.signal}
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed pt-2 border-t border-border/50">
+                  {activeCase.prompt}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="/contact"
+                  className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-6 py-3 bg-foreground text-background hover:opacity-85"
+                  style={{ fontFamily: '"Silkscreen", monospace' }}
+                >
+                  RUN A RANKING
+                </a>
+                <Link
+                  to="/bot"
+                  className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-5 py-3 border border-border text-foreground bg-background hover:border-foreground/50"
+                  style={{ fontFamily: '"Silkscreen", monospace' }}
+                >
+                  MORE ON CLEVRANK
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Ranked Facility List Mock */}
+            <div className="lg:col-span-7 border border-border bg-[#141417] text-foreground overflow-hidden shadow-2xl">
+              {/* Header Bar */}
+              <div className="bg-[#1c1c20] px-4 py-3 border-b border-border flex items-center justify-between text-xs font-mono">
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground font-silkscreen text-[11px]">#SHANDONG-DEMO</span>
+                  <span className="bg-foreground/10 text-foreground text-[9px] px-1.5 py-0.5 border border-foreground/20 uppercase font-silkscreen">
+                    SYNTHETIC DATA
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-muted-foreground uppercase font-silkscreen">
+                    RANKING · LIVE · V3
+                  </span>
+                  <span className="size-2 rounded-full bg-foreground animate-pulse" />
+                </div>
+              </div>
+
+              {/* Status Update Banner */}
+              <div className="bg-[#18181c] px-4 py-2 border-b border-border/60 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                <span className="text-foreground">Ranking updated: 3 new signals</span>
+                <span className="text-[10px] text-muted-foreground">Regional atmospheric correlation active</span>
+              </div>
+
+              {/* Ranked Facility Rows */}
+              <div className="p-4 space-y-3 font-mono text-xs">
+                {activeCase.facilities.map((fac, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 border border-border bg-[#101012] hover:border-foreground/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-foreground font-silkscreen text-[11px]">{fac.id}</span>
+                        <span className="text-muted-foreground">•</span>
+                        <span className="text-foreground/90">{fac.type}</span>
+                        <span className="text-muted-foreground">•</span>
+                        <span className="text-foreground font-bold">score {fac.score}</span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground leading-normal font-sans">
+                        Evidence: {fac.note}
+                      </p>
+                    </div>
+                    <div className="shrink-0 self-start sm:self-center">
+                      <span className={`text-[9px] font-silkscreen px-2 py-0.5 uppercase ${
+                        fac.status === "HIGH" 
+                          ? "bg-foreground text-background border border-foreground font-bold"
+                          : "bg-muted text-foreground border border-border"
+                      }`}>
+                        {fac.status} PRIORITY
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer Note */}
+              <div className="px-4 py-2.5 bg-[#18181c] border-t border-border/60 text-[10px] font-mono text-muted-foreground flex items-center justify-between">
+                <span>Synthetic dataset for demonstration</span>
+                <span>Prioritizes inspection targets</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
