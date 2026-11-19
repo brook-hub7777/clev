@@ -54,6 +54,35 @@ export function HomePage() {
   ];
 
   const [activeCase, setActiveCase] = useState(rankCases[0]);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      q: "What is Clev?",
+      a: "Clev builds software and sensors to locate and confirm emissions of illegal ozone-depleting substances. clevRank scores and prioritizes suspect facilities across an entire region. clevSense provides low-cost chimney sensors to confirm the source directly on site. clevProof generates audit-ready reports regulators can trust."
+    },
+    {
+      q: "How does clevRank prioritize facilities?",
+      a: "clevRank combines atmospheric monitoring data with satellite imagery, trade filings, and industrial registries. It scores facilities based on production capacity, chemical precursor requirements, and historical records, then presents the supporting evidence behind each score."
+    },
+    {
+      q: "Does Clev prove legal violations?",
+      a: "No. Clev prioritizes sites and measures emissions. It does not determine legal liability. clevRank highlights where inspectors should look first, and clevSense measures stack concentrations so authorized inspectors can confirm or rule out suspected sources."
+    },
+    {
+      q: "What chemicals does clevSense monitor?",
+      a: "clevSense targets controlled halogenated compounds and ozone-depleting substances, including CFC-11, carbon tetrachloride (CTC), and related industrial gas tracers."
+    },
+    {
+      q: "Who is Clev built for?",
+      a: "Environmental enforcement agencies, multilateral treaty verification teams, investigative NGOs, and industrial facilities that need continuous, affordable chimney monitoring."
+    },
+    {
+      q: "How can our inspection team run a pilot?",
+      a: "Agencies and facilities can join our pilot program. We provide direct access to the clevRank targeting platform and deploy sensor units for on-site validation."
+    }
+  ];
+
   return (
     <main>
       {/* =========================================================================
@@ -548,6 +577,47 @@ export function HomePage() {
             >
               MORE ON CLEVPROOF
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 4: FAQ
+         ========================================================================= */}
+      <section id="faq" className="scroll-mt-16 py-16 md:py-24 border-t border-border/60">
+        <div className="mx-auto w-full max-w-4xl px-6 sm:px-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+              FAQ
+            </p>
+            <h2
+              className="mt-4 max-w-5xl break-words text-balance text-[clamp(1.7rem,3.3vw,2.5rem)] text-foreground uppercase"
+              style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1 }}
+            >
+              Questions about Clev
+            </h2>
+          </div>
+
+          <div className="mt-10 divide-y divide-border border-y border-border">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div key={idx} className="py-4">
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="flex w-full items-center justify-between text-left py-2 font-medium text-foreground hover:text-foreground/80 transition-colors cursor-pointer"
+                  >
+                    <span className="text-base sm:text-lg font-medium text-foreground">{faq.q}</span>
+                    <ChevronDown className={`size-4 text-muted-foreground transition-transform duration-200 shrink-0 ml-4 ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {isOpen && (
+                    <div className="pt-2 pb-3 text-sm text-muted-foreground leading-relaxed animate-in fade-in-0 duration-200">
+                      <p>{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
