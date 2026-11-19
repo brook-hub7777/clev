@@ -431,6 +431,127 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* =========================================================================
+          SECTION 3: CLEVPROOF
+         ========================================================================= */}
+      <section id="proof" className="scroll-mt-16 py-16 md:py-24 border-t border-border/60">
+        <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+              CLEVPROOF · EMISSIONS REPORTS
+            </p>
+            <h2
+              className="mt-4 max-w-5xl break-words text-balance text-[clamp(1.7rem,3.3vw,2.5rem)] text-foreground uppercase"
+              style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1 }}
+            >
+              REPORTS REGULATORS CAN CHECK
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground leading-relaxed">
+              clevProof turns sensor readings into timestamped, tamper-evident reports, cross-checked against trade and registry data. Self-reported numbers are easy to fudge. Continuous measurements are harder to argue with. Coming soon: join the waitlist.
+            </p>
+          </div>
+
+          {/* Report Verification Dashboard Mock */}
+          <div className="mt-10 border border-border bg-card p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-border gap-4">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-silkscreen">
+                  STACK-REPORT
+                </span>
+                <h3 className="text-xl font-bold font-mono text-foreground mt-1">MONTH 07</h3>
+              </div>
+
+              {/* Legend: VERIFIED / FLAGGED */}
+              <div className="flex items-center gap-6 font-mono text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="size-2 rounded-full bg-foreground" />
+                  <span className="text-foreground font-silkscreen text-[10px]">VERIFIED (4)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="size-2 rounded-full border border-foreground/40 bg-transparent" />
+                  <span className="text-muted-foreground font-silkscreen text-[10px]">FLAGGED (1)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Audit Files List */}
+            <div className="mt-6 divide-y divide-border border border-border bg-background font-mono text-xs">
+              <div className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <FileText className="size-4 text-foreground" />
+                  <span className="font-semibold text-foreground">readings.log</span>
+                  <span className="text-muted-foreground text-[11px]">86,400 sensor data points (continuous stack stream)</span>
+                </div>
+                <span className="text-[10px] font-silkscreen text-foreground bg-foreground/10 px-2 py-0.5 border border-foreground/20">
+                  VERIFIED
+                </span>
+              </div>
+
+              <div className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Database className="size-4 text-foreground" />
+                  <span className="font-semibold text-foreground">trade.csv</span>
+                  <span className="text-muted-foreground text-[11px]">Regional chemical precursor purchase and export records</span>
+                </div>
+                <span className="text-[10px] font-silkscreen text-foreground bg-foreground/10 px-2 py-0.5 border border-foreground/20">
+                  VERIFIED
+                </span>
+              </div>
+
+              <div className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="size-4 text-foreground" />
+                  <span className="font-semibold text-foreground">registry.json</span>
+                  <span className="text-muted-foreground text-[11px]">Permitted equipment capacity and foaming chemical declarations</span>
+                </div>
+                <span className="text-[10px] font-silkscreen text-foreground bg-foreground/10 px-2 py-0.5 border border-foreground/20">
+                  VERIFIED
+                </span>
+              </div>
+
+              <div className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Activity className="size-4 text-foreground" />
+                  <span className="font-semibold text-foreground">flags.db</span>
+                  <span className="text-muted-foreground text-[11px]">Discrepancy: reported zero emissions vs observed nocturnal spike</span>
+                </div>
+                <span className="text-[10px] font-silkscreen text-background bg-foreground px-2 py-0.5 border border-foreground font-bold">
+                  FLAGGED
+                </span>
+              </div>
+
+              <div className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <FileText className="size-4 text-foreground" />
+                  <span className="font-semibold text-foreground">report.pdf</span>
+                  <span className="text-muted-foreground text-[11px]">Cryptographically signed inspection compliance digest</span>
+                </div>
+                <span className="text-[10px] font-silkscreen text-foreground bg-foreground/10 px-2 py-0.5 border border-foreground/20">
+                  VERIFIED
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-6 py-3 bg-foreground text-background hover:opacity-85"
+              style={{ fontFamily: '"Silkscreen", monospace' }}
+            >
+              JOIN THE WAITLIST
+            </a>
+            <Link
+              to="/code"
+              className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-6 py-3 border border-border text-foreground bg-background hover:border-foreground/50"
+              style={{ fontFamily: '"Silkscreen", monospace' }}
+            >
+              MORE ON CLEVPROOF
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
