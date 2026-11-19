@@ -81,6 +81,26 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Column 6: LEGAL */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                LEGAL
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/legal" className="block text-muted-foreground hover:text-foreground">Terms</Link>
+              <Link to="/privacy-policy" className="block text-muted-foreground hover:text-foreground">Privacy</Link>
+            </div>
+          </div>
+
+          {/* Column 7: STATUS */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="size-2 rounded-full bg-foreground animate-pulse" />
+              <span className="text-[11px] text-muted-foreground font-mono">All systems normal</span>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Social Bar */}
