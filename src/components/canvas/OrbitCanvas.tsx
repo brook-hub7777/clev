@@ -396,3 +396,98 @@ function updateOrbitState(state: OrbitState, dt: number) {
   }
 }
 
+interface OrbitCanvasProps {
+  className?: string;
+  theme?: "light" | "dark";
+  satellites?: number;
+  height?: number;
+  globeRadius?: number;
+  globeCenterY?: number;
+}
+
+export function OrbitCanvas({
+  className,
+  satellites = 6,
+  globeRadius,
+  globeCenterY,
+}: OrbitCanvasProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const stateRef = useRef<OrbitState | null>(null);
+
+  if (!stateRef.current) {
+    stateRef.current = initOrbitState(satellites);
+  }
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let lastTime = performance.now();
+
+    const handleResize = () => {
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(rect.width));
+      const h = Math.max(1, Math.round(rect.height));
+
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      if (stateRef.current) {
+        resizeOrbitState(stateRef.current, w, h, globeRadius, globeCenterY);
+        stateRef.current.time = 0;
+        // Pre-warm 50 ticks for orbit trails
+        for (let y = 0; y < 50; y++) {
+          updateOrbitState(stateRef.current, 1 / 60);
+        }
+      }
+    };
+
+    handleResize();
+    const ro = new ResizeObserver(handleResize);
+    ro.observe(container);
+
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      const state = stateRef.current;
+      if (state && ctx) {
+        const isDark = document.documentElement.classList.contains("dark");
+        state.light = !isDark;
+        updateOrbitState(state, dt);
+        state.buf.flush(ctx, state.w, state.h, isDark ? PALETTE_DARK : PALETTE_LIGHT);
+      }
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      ro.disconnect();
+    };
+  }, [globeRadius, globeCenterY]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative isolate size-full overflow-hidden ${className || ""}`}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 block size-full"
+        role="img"
+        aria-label="A dithered planet with six satellites tracing visible orbit lanes and a small shaded moon"
+      />
+    </div>
+  );
+}
+export default OrbitCanvas;
