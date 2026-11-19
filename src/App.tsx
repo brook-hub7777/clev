@@ -4,6 +4,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HomePage } from "@/pages/HomePage";
 import { PricingPage } from "@/pages/PricingPage";
+import { BotPage } from "@/pages/BotPage";
+import { RunPage } from "@/pages/RunPage";
+import { CodePage } from "@/pages/CodePage";
 import { PixelButton } from "@/components/ui/PixelButton";
 
 function ScrollToTop() {
@@ -45,6 +48,12 @@ export function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/rank" element={<BotPage />} />
+            <Route path="/bot" element={<BotPage />} />
+            <Route path="/sense" element={<RunPage />} />
+            <Route path="/run" element={<RunPage />} />
+            <Route path="/proof" element={<CodePage />} />
+            <Route path="/code" element={<CodePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
