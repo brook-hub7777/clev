@@ -144,6 +144,63 @@ export function PricingPage() {
             </div>
           </div>
 
+          {/* Card 3: clevProof */}
+          <div id="proof" className="border border-border bg-card p-8 flex flex-col justify-between">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <span className="text-[10px] uppercase font-silkscreen tracking-widest text-muted-foreground">
+                  Emissions Reports
+                </span>
+                <h3
+                  className="text-2xl sm:text-3xl tracking-wide text-foreground uppercase"
+                  style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400 }}
+                >
+                  clevProof
+                </h3>
+                <div className="pt-2">
+                  <span className="text-3xl font-bold font-silkscreen text-foreground">Soon</span>
+                  <span className="text-xs font-mono text-muted-foreground ml-2">waitlist open</span>
+                </div>
+              </div>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Tamper-evident, timestamped compliance digests cross-checked with trade and registry files that regulators can trust.
+              </p>
+
+              <div className="space-y-3 pt-4 border-t border-border/60">
+                <h4 className="text-xs uppercase font-silkscreen tracking-wider text-foreground">Report Verification:</h4>
+                <ul className="space-y-2.5 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Timestamped logs</strong> with cryptographic hash</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Trade file cross-checks</strong> for precursor consistency</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Audit alerts</strong> for unexplained nocturnal spikes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Regulator-ready standardized exports</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <PixelButton
+                variant="primary"
+                size="default"
+                href="/contact"
+                className="w-full"
+              >
+                JOIN THE WAITLIST
+              </PixelButton>
+            </div>
+          </div>
         </div>
 
       </div>
