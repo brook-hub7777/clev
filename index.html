@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clev: Emissions Source Identification & Monitoring</title>
+    <meta name="description" content="Clev focuses on ozone-depleting substances like CFC-11, CFC-12, and carbon tetrachloride, flagging illegal emissions that satellites can see but regulators currently can’t trace to a source." />
+    
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    
+    <!-- Preload Custom Fonts -->
+    <link rel="preload" href="/fonts/clevPixelFont-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Silkscreen-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Geist+Mono:wght@100..900&family=Silkscreen:wght@400;700&display=swap" />
+
+    <style>
+      @font-face {
+        font-family: 'ClevPixel';
+        src: url('/fonts/clevPixelFont-Regular.woff2') format('woff2'),
+             url('/fonts/clevPixelFont-Regular.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Silkscreen';
+        src: url('/fonts/Silkscreen-Regular.ttf') format('truetype');
+        font-weight: 400 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      .font-clev {
+        font-family: 'ClevPixel', 'Silkscreen', monospace !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.1 !important;
+      }
+      .font-silkscreen {
+        font-family: 'Silkscreen', monospace !important;
+      }
+      @media (min-width: 768px) {
+        .md\:col-span-7 {
+          grid-column: span 7 / span 7 !important;
+        }
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--muted-foreground) !important;
+        opacity: 0.65 !important;
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased min-h-screen bg-background text-foreground">
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>
