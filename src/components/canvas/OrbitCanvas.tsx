@@ -105,3 +105,99 @@ class DitherBuffer {
   }
 }
 
+interface Satellite {
+  ux: number;
+  uy: number;
+  uz: number;
+  vx: number;
+  vy: number;
+  vz: number;
+  radius: number;
+  omega: number;
+  phase: number;
+}
+
+function makeSat(t: number, f: number, h: number, s: number): Satellite {
+  const c = Math.cos(t);
+  const M = Math.sin(t);
+  return { ux: 1, uy: 0, uz: 0, vx: 0, vy: c, vz: M, radius: f, omega: h, phase: s };
+}
+
+function makeSats(count: number): Satellite[] {
+  const sats: Satellite[] = [];
+  for (let h = 0; h < count; h++) {
+    const s = (h % 2 === 0 ? 1 : -1) * (0.16 + O(h, 3) * 0.85);
+    const c = 1.38 + (h * 1.05) / count + O(h, 7) * 0.14;
+    const M = (O(h, 11) > 0.35 ? 1 : -1) * (0.16 + O(h, 13) * 0.3);
+    sats.push(makeSat(s, c, M, O(h, 17) * Math.PI * 2));
+  }
+  return sats;
+}
+
+function satPos(sat: Satellite, time: number) {
+  const h = sat.phase + time * sat.omega;
+  const s = Math.cos(h);
+  const c = Math.sin(h);
+  return {
+    x: sat.radius * (s * sat.ux + c * sat.vx),
+    y: sat.radius * (s * sat.uy + c * sat.vy),
+    z: sat.radius * (s * sat.uz + c * sat.vz),
+  };
+}
+
+function smoothStep(t: number, f: number, h: number): number {
+  const s = Math.min(1, Math.max(0, (h - t) / (f - t)));
+  return s * s * (3 - 2 * s);
+}
+
+const JT = -0.42;
+const TT = 0.5;
+const BT = 0.76;
+const XN = -0.621;
+const BN = 0.451;
+const DN = 0.641;
+
+interface OrbitState {
+  buf: DitherBuffer;
+  trail: Float32Array;
+  inside: Uint8Array;
+  lat: Float32Array;
+  lon: Float32Array;
+  shade: Float32Array;
+  inkA: Float32Array;
+  inkB: Float32Array;
+  light: boolean;
+  stars: Float32Array;
+  sats: Satellite[];
+  moonSat: Satellite;
+  cx: number;
+  cy: number;
+  R: number;
+  w: number;
+  h: number;
+  time: number;
+}
+
+function initOrbitState(satellites: number): OrbitState {
+  return {
+    buf: new DitherBuffer(4),
+    trail: new Float32Array(0),
+    inside: new Uint8Array(0),
+    lat: new Float32Array(0),
+    lon: new Float32Array(0),
+    shade: new Float32Array(0),
+    inkA: new Float32Array(0),
+    inkB: new Float32Array(0),
+    light: false,
+    stars: new Float32Array(0),
+    sats: makeSats(satellites),
+    moonSat: makeSat(0.34, 2.65, 0.085, 2.2),
+    cx: 0,
+    cy: 0,
+    R: 1,
+    w: 1,
+    h: 1,
+    time: 0,
+  };
+}
+
