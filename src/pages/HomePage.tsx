@@ -622,6 +622,49 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* =========================================================================
+          SECTION 5: COMPANY (Mission & Team)
+         ========================================================================= */}
+      <section id="company" className="scroll-mt-16 py-16 md:py-24 border-t border-border/60">
+        <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+              Team & Mission
+            </p>
+            <h2
+              className="mt-4 max-w-5xl break-words text-balance text-[clamp(1.7rem,3.3vw,2.5rem)] text-foreground uppercase"
+              style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1 }}
+            >
+              BUILT FOR ENVIRONMENTAL INSPECTIONS
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground leading-relaxed">
+              Clev was founded to close the enforcement gap between global atmospheric monitoring and ground-level facility verification.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
+            <div className="border border-border bg-card p-6 space-y-4">
+              <div className="aspect-square w-24 overflow-hidden border border-border bg-muted">
+                <img src="/team/biruk.png" alt="Biruk Yirsaw" className="h-full w-full object-cover grayscale hover:grayscale-0 transition-all" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-foreground">Biruk Yirsaw</h3>
+                <p className="text-xs font-mono text-muted-foreground">CEO and Co-founder</p>
+              </div>
+            </div>
+
+            <div className="border border-border bg-card p-6 space-y-4">
+              <div className="aspect-square w-24 overflow-hidden border border-border bg-muted">
+                <img src="/team/gebremedhin.jpg" alt="Gebremedhin Endashaw" className="h-full w-full object-cover grayscale hover:grayscale-0 transition-all" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-foreground">Gebremedhin Endashaw</h3>
+                <p className="text-xs font-mono text-muted-foreground">CTO and Co-founder</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
