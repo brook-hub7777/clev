@@ -8,6 +8,51 @@ export function Footer() {
       {/* Footer Content Columns */}
       <div className="mx-auto max-w-6xl px-6 pb-10 pt-6 sm:px-8 md:py-16">
         <div className="hidden gap-8 md:grid md:grid-cols-4 xl:grid-cols-7 xl:gap-x-6 text-xs font-sans">
+          {/* Column 1: CLEVSENSE */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                CLEVSENSE
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/run" className="block text-muted-foreground hover:text-foreground">Overview</Link>
+              <Link to="/hardware-notes" className="block text-muted-foreground hover:text-foreground">Hardware Notes</Link>
+              <Link to="/contact" className="block text-muted-foreground hover:text-foreground">Join Pilot</Link>
+              <Link to="/pricing" className="block text-muted-foreground hover:text-foreground">Deployment</Link>
+            </div>
+          </div>
+
+          {/* Column 2: CLEVPROOF */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                CLEVPROOF
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/code" className="block text-muted-foreground hover:text-foreground">Overview</Link>
+              <Link to="/code" className="block text-muted-foreground hover:text-foreground">Verification</Link>
+              <Link to="/contact" className="block text-muted-foreground hover:text-foreground">Join Waitlist</Link>
+              <Link to="/pricing" className="block text-muted-foreground hover:text-foreground">Compliance</Link>
+            </div>
+          </div>
+
+          {/* Column 3: CLEVRANK */}
+          <div>
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+                CLEVRANK
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Link to="/bot" className="block text-muted-foreground hover:text-foreground">Overview</Link>
+              <a href="/#rank" className="block text-muted-foreground hover:text-foreground">Case Studies</a>
+              <Link to="/contact" className="block text-muted-foreground hover:text-foreground">Run Ranking</Link>
+              <Link to="/blog" className="block text-muted-foreground hover:text-foreground">Targeting Logic</Link>
+            </div>
+          </div>
+
         </div>
 
         {/* Bottom Social Bar */}
