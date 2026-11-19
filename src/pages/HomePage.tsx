@@ -314,6 +314,123 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* =========================================================================
+          SECTION 2: CLEVSENSE
+         ========================================================================= */}
+      <section id="sense" className="scroll-mt-16 py-16 md:py-24 border-t border-border/60">
+        <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-silkscreen">
+              CLEVSENSE · CHIMNEY SENSOR
+            </p>
+            <h2
+              className="mt-4 max-w-5xl break-words text-balance text-[clamp(1.7rem,3.3vw,2.5rem)] text-foreground uppercase"
+              style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.1 }}
+            >
+              KNOW WHAT LEAVES THE CHIMNEY
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground leading-relaxed">
+              Inspectors carry a low-cost sensor to flagged sites and get a measured answer instead of a guess. clevSense logs readings around the clock and syncs them to your Clev dashboard. Built for agencies and factories that can't afford a five-figure analyzer.
+            </p>
+          </div>
+
+          {/* Sensor Nodes Simulation Mock */}
+          <div className="mt-10 border border-border bg-card p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-border gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-silkscreen">
+                  CONTINUOUS MONITORING NETWORK
+                </span>
+                <p className="text-sm font-semibold text-foreground">Active stack nodes (Synthetic deployment)</p>
+              </div>
+
+              {/* Legend: LOGGING / OFFLINE */}
+              <div className="flex items-center gap-6 font-mono text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="size-2 rounded-full bg-foreground animate-pulse" />
+                  <span className="text-foreground font-silkscreen text-[10px]">LOGGING (3)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="size-2 rounded-full border border-foreground/40 bg-transparent" />
+                  <span className="text-muted-foreground font-silkscreen text-[10px]">OFFLINE (0)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 3 Sensor Stack Nodes */}
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="border border-border bg-background p-5 space-y-3">
+                <div className="flex items-center justify-between font-mono text-xs">
+                  <span className="font-bold text-foreground font-silkscreen">stack-01</span>
+                  <span className="text-foreground font-silkscreen text-[10px]">LOGGING</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-foreground">0.02 <span className="text-xs text-muted-foreground font-sans">ppm</span></div>
+                <p className="text-xs text-muted-foreground">Primary flue duct · Nominal baseline reading</p>
+                <div className="pt-2 border-t border-border/40 text-[10px] font-mono text-muted-foreground flex justify-between">
+                  <span>Sampling: 10s</span>
+                  <span>Sync: Live</span>
+                </div>
+              </div>
+
+              <div className="border border-border bg-background p-5 space-y-3">
+                <div className="flex items-center justify-between font-mono text-xs">
+                  <span className="font-bold text-foreground font-silkscreen">stack-02</span>
+                  <span className="text-foreground font-silkscreen text-[10px]">LOGGING</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-foreground">0.00 <span className="text-xs text-muted-foreground font-sans">ppm</span></div>
+                <p className="text-xs text-muted-foreground">Secondary scrubber exhaust · Below detection limit</p>
+                <div className="pt-2 border-t border-border/40 text-[10px] font-mono text-muted-foreground flex justify-between">
+                  <span>Sampling: 10s</span>
+                  <span>Sync: Live</span>
+                </div>
+              </div>
+
+              <div className="border border-border bg-background p-5 space-y-3">
+                <div className="flex items-center justify-between font-mono text-xs">
+                  <span className="font-bold text-foreground font-silkscreen">stack-03</span>
+                  <span className="text-foreground font-silkscreen text-[10px]">LOGGING</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-foreground">0.41 <span className="text-xs text-muted-foreground font-sans">ppm spike</span></div>
+                <p className="text-xs text-muted-foreground">Solvent recovery vent · Intermittent purge detected</p>
+                <div className="pt-2 border-t border-border/40 text-[10px] font-mono text-muted-foreground flex justify-between">
+                  <span>Sampling: 10s</span>
+                  <span>Sync: Live</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-6 py-3 bg-foreground text-background hover:opacity-85"
+              style={{ fontFamily: '"Silkscreen", monospace' }}
+            >
+              JOIN A PILOT
+            </a>
+            <Link
+              to="/run"
+              className="inline-flex items-center justify-center uppercase select-none rounded-none transition font-silkscreen text-[11px] tracking-[0.22em] px-6 py-3 border border-border text-foreground bg-background hover:border-foreground/50"
+              style={{ fontFamily: '"Silkscreen", monospace' }}
+            >
+              MORE ON CLEVSENSE
+            </Link>
+            <Link
+              to="/hardware-notes"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground underline ml-2"
+            >
+              HARDWARE NOTES →
+            </Link>
+            <Link
+              to="/run#comparison"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground underline ml-4"
+            >
+              Compare with traditional stack analyzers →
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
