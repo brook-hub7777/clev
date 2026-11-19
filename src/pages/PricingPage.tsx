@@ -81,6 +81,69 @@ export function PricingPage() {
             </div>
           </div>
 
+          {/* Card 2: clevSense */}
+          <div id="sense" className="border border-foreground/40 bg-card p-8 flex flex-col justify-between relative shadow-lg">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase font-silkscreen tracking-widest text-muted-foreground">
+                    Chimney Sensor
+                  </span>
+                  <span className="text-[9px] uppercase font-silkscreen bg-foreground text-background px-2 py-0.5">
+                    COMING SOON
+                  </span>
+                </div>
+                <h3
+                  className="text-2xl sm:text-3xl tracking-wide text-foreground uppercase"
+                  style={{ fontFamily: "ClevPixel, Silkscreen, monospace", fontWeight: 400 }}
+                >
+                  clevSense
+                </h3>
+                <div className="pt-2">
+                  <span className="text-3xl font-bold font-silkscreen text-foreground">Soon</span>
+                  <span className="text-xs font-mono text-muted-foreground ml-2">waitlist open</span>
+                </div>
+              </div>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Affordable chimney sensor that logs continuous emissions data directly from stacks and vents around the clock.
+              </p>
+
+              <div className="space-y-3 pt-4 border-t border-border/60">
+                <h4 className="text-xs uppercase font-silkscreen tracking-wider text-foreground">Pilot Hardware Features:</h4>
+                <ul className="space-y-2.5 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Continuous monitoring</strong> around the clock</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Autonomous sync</strong> to central Clev console</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Low-cost hardware</strong> for broad deployment</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="size-4 text-foreground shrink-0 mt-0.5" />
+                    <span>Ruggedized industrial weatherproof housing</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <PixelButton
+                variant="primary"
+                size="default"
+                href="/contact"
+                className="w-full"
+              >
+                JOIN THE WAITLIST
+              </PixelButton>
+            </div>
+          </div>
+
         </div>
 
       </div>
