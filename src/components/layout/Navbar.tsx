@@ -47,6 +47,63 @@ export function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden items-center gap-4 lg:flex">
+          {/* RANK Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setActiveDropdown("rank")}
+            onMouseLeave={() => setActiveDropdown(null)}
+          >
+            <button
+              className="group inline-flex items-center justify-center px-2 py-2 text-[10px] font-normal uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground h-auto rounded-none bg-transparent"
+              style={{ fontFamily: "Silkscreen, monospace" }}
+              onClick={() => setActiveDropdown(activeDropdown === "rank" ? null : "rank")}
+            >
+              RANK
+              <ChevronDown
+                className={`relative top-px ml-1 size-3 transition duration-300 ${
+                  activeDropdown === "rank" ? "rotate-180 text-foreground" : ""
+                }`}
+              />
+            </button>
+
+            {activeDropdown === "rank" && (
+              <div className="absolute top-full left-0 mt-1 w-80 border border-border bg-popover p-2 shadow-2xl z-50 rounded-none">
+                <div className="px-3 pb-1 pt-2">
+                  <p
+                    className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
+                    style={{ fontFamily: "Silkscreen, monospace" }}
+                  >
+                    Facility Targeting
+                  </p>
+                </div>
+                <Link
+                  to="/bot"
+                  className="block px-3 py-2.5 transition-colors hover:bg-muted text-foreground"
+                >
+                  <div className="text-sm font-medium">clevRank Overview</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">Prioritize facilities behind regional plumes</div>
+                </Link>
+                <a
+                  href="/#rank"
+                  className="block px-3 py-2.5 transition-colors hover:bg-muted text-foreground"
+                >
+                  <div className="text-sm font-medium">Interactive Cases</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">Explore synthetic ranking scenarios</div>
+                </a>
+                <Link
+                  to="/contact"
+                  className="block px-3 py-2.5 transition-colors hover:bg-muted text-foreground group"
+                >
+                  <div className="text-sm font-medium flex items-center justify-between">
+                    Run a ranking
+                    <ArrowUpRight className="size-3 text-muted-foreground group-hover:text-foreground" />
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">Initiate targeting for an emissions spike</div>
+                </Link>
+              </div>
+            )}
+          </div>
+
           {/* Direct Static Links */}
           <Link
             to="/pricing"
